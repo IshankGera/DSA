@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void merge(vector<int>&nums, int l, int m, int r)
+    {
+int s1=l,e1=m,e2=r,s2=m+1,len1=e1-s1+1,len2=e2-s2+1;
+int copy[len1+len2] , pos=0 ; 
+while(s1<=e1 && s2<=e2){
+    if(nums[s1]<=nums[s2]) copy[pos++]=nums[s1++];
+    else copy[pos++]=nums[s2++] ;
+}
+while(s1<=e1) copy[pos++] = nums[s1++] ;
+while(s2<=e2) copy[pos++] = nums[s2++] ; 
+for(int u = 0 ; u<(len1+len2) ; ++u) nums[l++]  = copy[u] ;
+}
+    void mergesort(vector<int>&nums , int s , int e){
+        if(s>=e)
+            return ;
+        int mid = (s+e)/2 ;
+        mergesort(nums , s , mid) ; 
+        mergesort(nums , mid+1 , e)  ; 
+        merge(nums , s, mid , e) ;
+        }
+    vector<int> sortArray(vector<int>& nums) {
+        int end = nums.size()-1 ;
+        if(end==0){
+            return nums  ;
+        }
+        int start = 0 ;
+        mergesort(nums , start ,end ) ; 
+        return nums ;
+    }
+};
