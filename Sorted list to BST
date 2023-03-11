@@ -1,0 +1,33 @@
+
+class Solution {
+public:
+    int len(ListNode *head , vector<int>&vt){
+        ListNode *temp = head ;
+        int count = 0 ; 
+        while(temp!=NULL){
+            vt.push_back(temp->val) ;
+            ++count ;
+            temp = temp->next ;
+        }
+        return count ; 
+    }
+    TreeNode* buildtree(vector<int>& vt , int start , int end){
+        if(start>end)   return NULL ;
+        int mid  = (start+end)/2 ;
+        TreeNode *root = new TreeNode(vt[mid]) ;
+        root->left = buildtree(vt , start , mid-1) ;
+        root->right = buildtree(vt , mid+1 , end) ;
+        return root ;
+    }
+    TreeNode* sortedListToBST(ListNode* head) {
+        if(head == NULL)    return NULL ;
+        if(head->next == NULL){
+            TreeNode *root = new TreeNode(head->val) ;
+            return root ; 
+        }
+        vector<int>vt ;
+        int count = len(head , vt ) ; 
+        return buildtree(vt , 0 , count-1) ;
+
+    }
+};
